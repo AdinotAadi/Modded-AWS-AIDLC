@@ -1,0 +1,240 @@
+{
+  "rules": [
+    {
+      "id": "R001",
+      "name": "Credentials in URL",
+      "severity": "Critical",
+      "category": "Security",
+      "description": "Credentials, tokens or sensitive data passed as URL query parameters. URLs are logged in server logs, browser history, load balancers and proxies.",
+      "patterns": ["?password=", "?token=", "?secret=", "?key=", "?auth=", "?pwd=", "?pass="],
+      "example": "https://example.com/api?password=abc123"
+    },
+    {
+      "id": "R002",
+      "name": "Hardcoded credentials",
+      "severity": "Critical",
+      "category": "Security",
+      "description": "Hardcoded passwords, API keys or secrets directly in source code.",
+      "patterns": ["password = \"", "secret = \"", "apikey = \"", "api_key = \"", "connectionstring = \""],
+      "example": "string password = \"mypassword123\";"
+    },
+    {
+      "id": "R003",
+      "name": "SQL string concatenation",
+      "severity": "Critical",
+      "category": "Security",
+      "description": "SQL queries built using string concatenation with user input — SQL injection risk.",
+      "patterns": ["\"SELECT", "\"INSERT", "\"UPDATE", "\"DELETE", "+ userId", "+ id", "+ input"],
+      "example": "var query = \"SELECT * FROM users WHERE id=\" + userId;"
+    },
+    {
+      "id": "R004",
+      "name": "innerHTML usage in Angular",
+      "severity": "High",
+      "category": "Security",
+      "description": "Direct innerHTML assignment bypasses Angular XSS sanitization.",
+      "patterns": ["innerHTML"],
+      "example": "element.innerHTML = userInput;"
+    },
+    {
+      "id": "R005",
+      "name": "Missing Authorize attribute",
+      "severity": "High",
+      "category": "Security",
+      "description": "ASP.NET controller or action missing [Authorize] attribute — endpoint may be publicly accessible.",
+      "patterns": ["[HttpGet]", "[HttpPost]", "[HttpPut]", "[HttpDelete]", "[HttpPatch]"],
+      "example": "[HttpPost] public IActionResult Update() { ... }"
+    },
+    {
+      "id": "R006",
+      "name": "Sensitive data in logs",
+      "severity": "High",
+      "category": "Security",
+      "description": "Logging sensitive data like passwords or tokens exposes them in log files and monitoring systems.",
+      "patterns": ["log.Info(password", "log.Debug(password", "Console.WriteLine(password", "console.log(password", "console.log(token", "_logger.Log(password"],
+      "example": "Console.WriteLine(\"Password: \" + password);"
+    },
+    {
+      "id": "R007",
+      "name": "Insecure random number generation",
+      "severity": "High",
+      "category": "Security",
+      "description": "System.Random is not cryptographically secure. Use RNGCryptoServiceProvider or RandomNumberGenerator for security-sensitive values.",
+      "patterns": ["new Random()", "Random.Next(", "Math.random()"],
+      "example": "var token = new Random().Next().ToString();"
+    },
+    {
+      "id": "R008",
+      "name": "Disabled SSL/TLS validation",
+      "severity": "Critical",
+      "category": "Security",
+      "description": "Disabling SSL certificate validation allows man-in-the-middle attacks.",
+      "patterns": ["ServerCertificateValidationCallback", "ServicePointManager", "rejectUnauthorized: false", "InsecureSkipVerify"],
+      "example": "ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };"
+    },
+    {
+      "id": "R009",
+      "name": "Empty catch block",
+      "severity": "Medium",
+      "category": "Code Quality",
+      "description": "Empty catch blocks silently swallow exceptions making debugging impossible and hiding security errors.",
+      "patterns": ["catch {}", "catch (Exception) {}", "catch(Exception e) {}"],
+      "example": "catch (Exception) { }"
+    },
+    {
+      "id": "R010",
+      "name": "Weak hashing algorithm",
+      "severity": "Critical",
+      "category": "Security",
+      "description": "MD5 and SHA1 are cryptographically broken and must not be used for passwords or security-sensitive data.",
+      "patterns": ["MD5.Create()", "SHA1.Create()", "MD5CryptoServiceProvider", "SHA1Managed", "CryptoJS.MD5", "CryptoJS.SHA1"],
+      "example": "var hash = MD5.Create().ComputeHash(data);"
+    },
+    {
+      "id": "R011",
+      "name": "Hardcoded connection string",
+      "severity": "Critical",
+      "category": "Security",
+      "description": "Database connection strings hardcoded in source code expose credentials in version control.",
+      "patterns": ["Server=", "Data Source=", "Initial Catalog=", "User ID=", "Password=", "mongodb://", "mysql://", "postgresql://"],
+      "example": "var conn = \"Server=prod-db;User ID=admin;Password=secret123\";"
+    },
+    {
+      "id": "R012",
+      "name": "Unsafe deserialization",
+      "severity": "Critical",
+      "category": "Security",
+      "description": "Deserializing untrusted data without type restrictions can lead to remote code execution.",
+      "patterns": ["BinaryFormatter", "JavaScriptSerializer", "JsonConvert.DeserializeObject", "XmlSerializer", "ObjectStateFormatter"],
+      "example": "var obj = new BinaryFormatter().Deserialize(stream);"
+    },
+    {
+      "id": "R013",
+      "name": "Missing anti-forgery token",
+      "severity": "High",
+      "category": "Security",
+      "description": "POST endpoints in ASP.NET without [ValidateAntiForgeryToken] are vulnerable to CSRF attacks.",
+      "patterns": ["[HttpPost]"],
+      "example": "[HttpPost] public IActionResult Save(Model m) { ... } // missing [ValidateAntiForgeryToken]"
+    },
+    {
+      "id": "R014",
+      "name": "Unvalidated redirect",
+      "severity": "High",
+      "category": "Security",
+      "description": "Redirecting to user-supplied URLs without validation enables open redirect attacks used in phishing.",
+      "patterns": ["Redirect(", "Response.Redirect(", "router.navigate(", "window.location ="],
+      "example": "return Redirect(Request.QueryString[\"returnUrl\"]);"
+    },
+    {
+      "id": "R015",
+      "name": "Path traversal risk",
+      "severity": "Critical",
+      "category": "Security",
+      "description": "Using user input directly in file paths allows attackers to read or write arbitrary files.",
+      "patterns": ["File.ReadAllText(", "File.WriteAllText(", "Path.Combine(", "new FileStream("],
+      "example": "File.ReadAllText(userInput);"
+    },
+    {
+      "id": "R016",
+      "name": "Overly permissive CORS",
+      "severity": "High",
+      "category": "Security",
+      "description": "Allowing all origins (*) in CORS policy exposes APIs to cross-origin attacks.",
+      "patterns": ["AllowAnyOrigin()", "origin: '*'", "Access-Control-Allow-Origin: *"],
+      "example": "app.UseCors(x => x.AllowAnyOrigin());"
+    },
+    {
+      "id": "R017",
+      "name": "Sensitive data in comments",
+      "severity": "Medium",
+      "category": "Security",
+      "description": "Passwords, keys or sensitive information left in code comments are visible to anyone with repo access.",
+      "patterns": ["// password", "// secret", "// key", "// token", "/* password", "/* secret"],
+      "example": "// password: admin123"
+    },
+    {
+      "id": "R018",
+      "name": "Angular bypassSecurityTrust usage",
+      "severity": "High",
+      "category": "Security",
+      "description": "Bypassing Angular security trust marks content as safe without sanitization — XSS risk.",
+      "patterns": ["bypassSecurityTrustHtml", "bypassSecurityTrustScript", "bypassSecurityTrustUrl", "bypassSecurityTrustResourceUrl"],
+      "example": "this.safeHtml = sanitizer.bypassSecurityTrustHtml(userInput);"
+    },
+    {
+      "id": "R019",
+      "name": "JWT stored in localStorage",
+      "severity": "High",
+      "category": "Security",
+      "description": "Storing JWT tokens in localStorage exposes them to XSS attacks. Use httpOnly cookies instead.",
+      "patterns": ["localStorage.setItem(", "localStorage.getItem("],
+      "example": "localStorage.setItem('token', jwtToken);"
+    },
+    {
+      "id": "R020",
+      "name": "Debug or TODO code left in",
+      "severity": "Low",
+      "category": "Code Quality",
+      "description": "TODO, FIXME, HACK or debug statements left in production code indicate incomplete work.",
+      "patterns": ["// TODO", "// FIXME", "// HACK", "// XXX", "debugger;", "Console.WriteLine(\"DEBUG"],
+      "example": "// TODO: add input validation here"
+    },
+    {
+      "id": "R021",
+      "name": "HttpClient created manually in Angular",
+      "severity": "Low",
+      "category": "Code Quality",
+      "description": "Manually creating HttpClient instances instead of using Angular dependency injection leads to resource leaks.",
+      "patterns": ["new HttpClient("],
+      "example": "const client = new HttpClient();"
+    },
+    {
+      "id": "R022",
+      "name": "Eval usage",
+      "severity": "Critical",
+      "category": "Security",
+      "description": "eval() executes arbitrary code and is a major XSS and code injection risk.",
+      "patterns": ["eval(", "Function(\"", "setTimeout(\"", "setInterval(\""],
+      "example": "eval(userInput);"
+    },
+    {
+      "id": "R023",
+      "name": "Plaintext HTTP endpoint",
+      "severity": "High",
+      "category": "Security",
+      "description": "Using HTTP instead of HTTPS exposes data in transit to interception.",
+      "patterns": ["http://", "allowHttp", "requireHttps: false"],
+      "example": "var url = \"http://api.example.com/data\";"
+    },
+    {
+      "id": "R024",
+      "name": "Missing input validation",
+      "severity": "Medium",
+      "category": "Security",
+      "description": "User input used directly without validation or sanitization — potential injection risk.",
+      "patterns": ["Request.QueryString[", "Request.Form[", "Request.Params[", "HttpContext.Request.Query["],
+      "example": "var name = Request.QueryString[\"name\"];"
+    },
+    {
+      "id": "R025",
+      "name": "Exposed stack trace",
+      "severity": "Medium",
+      "category": "Security",
+      "description": "Returning exception details or stack traces in API responses leaks internal system information to attackers.",
+      "patterns": ["ex.StackTrace", "ex.Message", "Exception.ToString()", "exception.toString()"],
+      "example": "return BadRequest(ex.StackTrace);"
+    }
+  ],
+  "general_instructions": [
+    "Do NOT flag something as a vulnerability just because it contains words like password, token, secret, key — context matters.",
+    "Only flag actual security issues — hardcoded credentials, SQL injection, XSS, insecure deserialization, missing auth checks etc.",
+    "A Critical severity means the code is actively exploitable right now.",
+    "If a change is trivial or harmless, skip that file entirely.",
+    "When in doubt, downgrade severity. Prefer accuracy over noise.",
+    "Credentials or sensitive data passed as URL query parameters is always a Critical vulnerability.",
+    "Removed code in the diff (lines starting with -) should still be flagged if they reveal historical security issues that may still exist in git history.",
+    "Do not flag test files or mock data with the same severity as production code.",
+    "Consider the full context of a code block before flagging — a pattern match alone is not enough."
+  ]
+}

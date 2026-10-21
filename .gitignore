@@ -1,0 +1,57 @@
+# Claude Code global configuration repository
+# Place this file at C:\Users\aditya.patel\.claude\.gitignore
+# SECURITY: deny by default; only intentionally shared content is tracked.
+
+# Ignore all files and directories at the repository root.
+/*
+
+# Allow Git to track this policy and documentation.
+!/.gitignore
+!/README.md
+!/.gitattributes
+
+# Global shared instructions.
+!/CLAUDE.md
+
+# Existing AI-DLC rules. Keep their directory contents.
+!/.aidlc-rule-details/
+!/.aidlc-rule-details/**
+
+# If you add version-controlled workflow templates or agent entrypoints:
+!/templates/
+!/templates/**
+!/scripts/
+!/scripts/**
+!/aidlc/
+!/aidlc/**
+!/AGENTS.md
+
+# OPTIONAL: To publish carefully reviewed custom skills, copy the selected
+# skills into a separate /shared-skills/ directory; avoid tracking the whole
+# /skills/ tree, which may contain third-party or generated content.
+!/shared-skills/
+!/shared-skills/**
+
+# Defense in depth: secrets, machine settings, and local configuration.
+# Patterns below also apply inside any allowed subdirectories.
+**/.env
+**/.env.*
+**/*.pem
+**/*.key
+**/*.p12
+**/*.pfx
+**/*credentials*.json
+**/*secret*.json
+**/*token*.json
+**/settings.json
+**/settings.local.json
+**/remote-settings.json
+**/mcp.json
+**/.mcp.json
+**/.DS_Store
+**/Thumbs.db
+
+# Claude runtime data is excluded by the root allowlist above:
+# backups/, cache/, downloads/, file-history/, history.jsonl,
+# ide/, plans/, plugins/, projects/, session-env/, sessions/,
+# shell-snapshots/, state/, skills/, .credentials.json, etc.
